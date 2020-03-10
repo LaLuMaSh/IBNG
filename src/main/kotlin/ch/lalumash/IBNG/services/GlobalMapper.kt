@@ -1,6 +1,8 @@
 package ch.lalumash.IBNG.services
 
 import ch.lalumash.IBNG.dtos.UserDto
+import ch.lalumash.IBNG.dtos.feed.FeedDto
+import ch.lalumash.IBNG.entities.FeedEntity
 import ch.lalumash.IBNG.entities.UserEntity
 import org.springframework.stereotype.Service
 
@@ -11,5 +13,12 @@ class GlobalMapper {
                 userName = user.username,
                 nickname = user.nickname
         )
+    }
+    fun feedEntityToDto(feed: FeedEntity?): FeedDto {
+        if (feed != null) {
+            return FeedDto(owner = feed.owner, postEntities = feed.postEntities)
+        }else {
+            return FeedDto(owner = "", postEntities = ArrayList())
+        }
     }
 }
