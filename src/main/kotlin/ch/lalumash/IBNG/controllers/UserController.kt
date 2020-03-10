@@ -1,8 +1,8 @@
 package ch.lalumash.IBNG.controllers
 
-import ch.lalumash.IBNG.entities.UserEntity
-import ch.lalumash.IBNG.repositories.UserEntityRepository
-import org.springframework.beans.factory.annotation.Autowired
+import ch.lalumash.IBNG.dtos.UserDto
+import ch.lalumash.IBNG.services.GlobalMapper
+import ch.lalumash.IBNG.services.UserService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,10 +11,13 @@ import java.util.*
 
 @RestController
 @RequestMapping("user/")
-class UserController(private val userEntityRepository: UserEntityRepository) {
-    @GetMapping("get/{userName}")
-    fun getUser(@PathVariable userName: String): ArrayList<UserEntity> {
-        return userEntityRepository.findAllByOrderByUsername()
-    }
+class UserController(
+        private val mapper: GlobalMapper,
+        private val userService: UserService
+) {
 
+    @GetMapping("{username}")
+    fun getUser(@PathVariable username: String): Optional<UserDto> {
+        return userService.getUserbyUsername(username).map { mapper.userEntityToDto(it) }
+    }
 }
