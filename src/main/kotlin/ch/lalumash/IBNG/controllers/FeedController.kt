@@ -17,7 +17,7 @@ class FeedController @Autowired constructor(
         private val userService: UserService
 ) {
     @GetMapping("{userName}")
-    fun getFeedById(@PathVariable userName: String?): FeedDto? {
+    fun getFeedById(@PathVariable userName: String?): FeedDto {
         if (userName == null) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzernamen darf nicht null sein.")
         }
