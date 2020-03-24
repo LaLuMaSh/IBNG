@@ -16,9 +16,9 @@ class GlobalMapper {
     }
     fun feedEntityToDto(feed: FeedEntity?): FeedDto {
         if (feed != null) {
-            return FeedDto(owner = feed.owner, postEntities = feed.postEntities)
+            return FeedDto(id = feed.id, postEntities = feed.postEntities)
         }else {
-            return FeedDto(owner = "", postEntities = ArrayList())
+            return FeedDto(id = "", postEntities = ArrayList())
         }
     }
 }
