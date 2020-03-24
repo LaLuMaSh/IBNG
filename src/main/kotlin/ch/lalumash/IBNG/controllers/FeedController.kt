@@ -35,7 +35,7 @@ class FeedController @Autowired constructor(
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzernamen darf nicht null sein.")
         }
 
-        if (userService.getUserbyUsername(userName).orElse(null) == null) {
+        if (userService.getUserByUsername(userName) == null) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer mit dem Benutzernamen $userName existiert nicht.")
         }
 

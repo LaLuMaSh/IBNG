@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class GlobalMapper {
     fun userEntityToDto(user: UserEntity): UserDto {
         return UserDto(
-                userName = user.username,
+                username = user.username,
                 nickname = user.nickname
         )
     }

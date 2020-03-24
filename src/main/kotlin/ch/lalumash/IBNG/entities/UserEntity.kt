@@ -13,13 +13,13 @@ import javax.persistence.Table
 class UserEntity : Serializable {
     @Id
     @Column(name = "username", nullable = false)
-    val username: String = ""
+    var username: String = ""
 
     @Column(name = "password_sha256", nullable = false)
-    val passwordSha256: String = ""
+    var passwordSha256: String = ""
 
     @Column(name = "nickname", nullable = false)
-    val nickname: String = ""
+    var nickname: String = ""
 
     companion object {
         private const val serialVersionUID = 1L

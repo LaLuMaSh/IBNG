@@ -1,6 +1,12 @@
 package ch.lalumash.IBNG.dtos
 
 data class UserDto(
-        var userName: String,
+        var username: String,
         var nickname: String
+)
+
+data class UserDtoCreate(
+        var username: String,
+        var nickname: String,
+        var passwordHash: String
 )
