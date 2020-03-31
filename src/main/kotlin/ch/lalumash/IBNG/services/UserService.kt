@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserService(private val userEntityRepository: UserEntityRepository) {
-    fun getUserByUsername(username: String): UserEntity? {
-        return userEntityRepository.findById(username).orElse(null)
+    fun getUserById(id: String): UserEntity? {
+        return userEntityRepository.findById(id).orElse(null)
     }
     fun addUser(user: UserDtoCreate): UserDto {
         val entity = UserEntity().apply {

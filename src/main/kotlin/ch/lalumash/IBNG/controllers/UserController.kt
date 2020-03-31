@@ -17,7 +17,7 @@ class UserController(
 
     @GetMapping("{username}")
     fun getUser(@PathVariable username: String): UserDto {
-        val userByUsername = userService.getUserByUsername(username)
+        val userByUsername = userService.getUserById(username)
 
         if (userByUsername == null) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer mit dem namen $username nicht gefunden.")

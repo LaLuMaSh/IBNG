@@ -6,3 +6,6 @@ class FeedDto(
         var postEntities: List<PostEntity>,
         var id: String
 )
+class CreateFeedDto(
+        var id: String
+)

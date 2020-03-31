@@ -1,5 +1,6 @@
 package ch.lalumash.IBNG.controllers
 
+import ch.lalumash.IBNG.dtos.feed.CreateFeedDto
 import ch.lalumash.IBNG.dtos.feed.FeedDto
 import ch.lalumash.IBNG.services.FeedService
 import ch.lalumash.IBNG.services.GlobalMapper
@@ -19,26 +20,26 @@ class FeedController @Autowired constructor(
     @GetMapping("{userName}")
     fun getFeedById(@PathVariable userName: String?): FeedDto {
         if (userName == null) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzernamen darf nicht null sein.")
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Feedname darf nicht null sein.")
         }
 
         if (feedService.getByUser(userName) == null) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer mit dem Benutzernamen $userName existiert nicht.")
+            return feedService.createForId(CreateFeedDto(userName))
         }
 
         return mapper.feedEntityToDto(feedService.getByUser(userName))
     }
 
-    @PostMapping("create/{userName}")
-    fun addFeedForUser(@PathVariable userName: String?) {
-        if (userName == null) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzernamen darf nicht null sein.")
+    @PostMapping("user/create")
+    fun addFeedForUser(@RequestBody feed: CreateFeedDto?) {
+        if (feed == null) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Feed darf nicht null sein.")
         }
 
-        if (userService.getUserByUsername(userName) == null) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer mit dem Benutzernamen $userName existiert nicht.")
+        if (userService.getUserById(feed.id) == null) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Feed mit der ID ${feed.id} existiert nicht.")
         }
 
-        feedService.createForUser(userName)
+        feedService.createForId(feed)
     }
 }
