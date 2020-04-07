@@ -15,8 +15,8 @@ class UserEntity : Serializable {
     @Column(name = "username", nullable = false)
     var username: String = ""
 
-    @Column(name = "password_sha256", nullable = false)
-    var passwordSha256: String = ""
+    @Column(name = "password_bcrypt", nullable = false)
+    var passwordBcrypt: String = ""
 
     @Column(name = "nickname", nullable = false)
     var nickname: String = ""

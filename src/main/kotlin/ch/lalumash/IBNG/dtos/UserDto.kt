@@ -8,5 +8,5 @@ data class UserDto(
 data class UserDtoCreate(
         var username: String,
         var nickname: String,
-        var passwordHash: String
+        var password: String
 )
