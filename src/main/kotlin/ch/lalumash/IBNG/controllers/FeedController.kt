@@ -30,7 +30,7 @@ class FeedController @Autowired constructor(
         return mapper.feedEntityToDto(feedService.getByUser(userName))
     }
 
-    @PostMapping("user/create")
+    @PostMapping("user/add")
     fun addFeedForUser(@RequestBody feed: CreateFeedDto?) {
         if (feed == null) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "Feed darf nicht null sein.")
