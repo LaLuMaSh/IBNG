@@ -8,7 +8,7 @@ abstract class PostEntity(
         val author: String,
         val created: LocalDateTime,
         val text: String,
-        parentPostEntity: PostEntity?
+        val parentPostEntity: PostEntity?
 ) : Serializable {
     private val childPostEntities: MutableList<PostEntity>
 

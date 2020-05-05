@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("user/")
+@CrossOrigin("*")
 class UserController(
         private val mapper: GlobalMapper,
         private val userService: UserService

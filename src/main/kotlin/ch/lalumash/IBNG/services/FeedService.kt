@@ -3,6 +3,7 @@ package ch.lalumash.IBNG.services
 import ch.lalumash.IBNG.dtos.feed.CreateFeedDto
 import ch.lalumash.IBNG.dtos.feed.FeedDto
 import ch.lalumash.IBNG.entities.FeedEntity
+import ch.lalumash.IBNG.entities.PostEntity
 import ch.lalumash.IBNG.repositories.FeedEntityRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -17,6 +18,12 @@ class FeedService @Autowired constructor(var feedEntityRepository: FeedEntityRep
         val entity = FeedEntity(ArrayList(), feed.id);
         val save = feedEntityRepository.save(entity)
 
+        return FeedDto(save.postEntities, save.id)
+    }
+
+    fun convertFeed(feed: FeedDto): FeedDto {
+        val entity = FeedEntity(feed.postEntities, feed.id);
+        val save = feedEntityRepository.save(entity)
         return FeedDto(save.postEntities, save.id)
     }
 }

@@ -2,13 +2,13 @@ package ch.lalumash.IBNG.entities
 
 import org.springframework.data.redis.core.RedisHash
 import java.io.Serializable
-import java.util.*
 
 
 @RedisHash("Feed")
 class FeedEntity : Serializable {
-    var postEntities: List<PostEntity>
-    var id: String
+    var postEntities: List<PostEntity> = ArrayList()
+    var id: String = ""
+
 
     constructor(owner: String) {
         this.id = owner
@@ -19,4 +19,8 @@ class FeedEntity : Serializable {
         this.postEntities = postEntities
         this.id = owner
     }
+
+    constructor()
+
+
 }
