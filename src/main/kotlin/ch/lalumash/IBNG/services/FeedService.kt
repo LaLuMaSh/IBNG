@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class FeedService @Autowired constructor(var feedEntityRepository: FeedEntityRepository) {
+class FeedService @Autowired constructor(
+        var feedEntityRepository: FeedEntityRepository,
+        var mapper: GlobalMapper
+) {
     fun getByUser(userName: String): FeedEntity? {
         return feedEntityRepository.findById(userName).orElse(null)
     }
@@ -35,5 +38,13 @@ class FeedService @Autowired constructor(var feedEntityRepository: FeedEntityRep
         val entity = FeedEntity(list, feed.id);
         feedEntityRepository.save(entity)
         return feed;
+    }
+
+    fun getAllFeeds(): List<FeedDto> {
+        val list = ArrayList<FeedDto>();
+        for (feedEntity in feedEntityRepository.findAll().toList()) {
+            list.add(mapper.feedEntityToDto(feedEntity)!!);
+        }
+        return list;
     }
 }

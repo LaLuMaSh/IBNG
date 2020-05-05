@@ -3,7 +3,6 @@ package ch.lalumash.IBNG.controllers
 import ch.lalumash.IBNG.dtos.feed.CreateFeedDto
 import ch.lalumash.IBNG.dtos.feed.FeedDto
 import ch.lalumash.IBNG.dtos.feed.TextPostDto
-import ch.lalumash.IBNG.entities.TextPostEntity
 import ch.lalumash.IBNG.services.FeedService
 import ch.lalumash.IBNG.services.GlobalMapper
 import ch.lalumash.IBNG.services.UserService
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
-import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("feed/")
@@ -46,6 +44,7 @@ class FeedController @Autowired constructor(
 
         feedService.createForId(feed)
     }
+
     @PostMapping("user/update")
     fun updateFeed(@RequestBody feed: FeedDto?) {
         if (feed == null) {
@@ -57,13 +56,19 @@ class FeedController @Autowired constructor(
         }
         feedService.convertFeed(feed);
     }
-    @PostMapping("user/mockdata")
-    fun test(@RequestBody feed: CreateFeedDto) {
-        val list = listOf(
-                TextPostDto("test", LocalDateTime.now(), "ein beispieltext"),
-                TextPostDto("test", LocalDateTime.now(), "ein zweiter post")
-        )
 
-        feedService.convertFeed(FeedDto(list, feed.id));
+    @GetMapping("all")
+    fun test(): List<TextPostDto> {
+
+        val list = ArrayList<TextPostDto>();
+        for (allFeed in feedService.getAllFeeds()) {
+            for (postEntity in allFeed.postEntities) {
+                list.add(postEntity);
+            }
+        }
+
+        list.sortByDescending { textPostDto -> textPostDto.created }
+
+        return list
     }
 }
