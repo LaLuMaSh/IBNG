@@ -6,7 +6,7 @@ import java.io.Serializable
 
 @RedisHash("Feed")
 class FeedEntity : Serializable {
-    var postEntities: List<PostEntity> = ArrayList()
+    var postEntities: List<TextPostEntity> = ArrayList()
     var id: String = ""
 
 
@@ -15,7 +15,7 @@ class FeedEntity : Serializable {
         postEntities = ArrayList()
     }
 
-    constructor(postEntities: List<PostEntity>, owner: String) {
+    constructor(postEntities: List<TextPostEntity>, owner: String) {
         this.postEntities = postEntities
         this.id = owner
     }

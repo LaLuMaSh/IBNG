@@ -2,8 +2,7 @@ package ch.lalumash.IBNG.controllers
 
 import ch.lalumash.IBNG.dtos.feed.CreateFeedDto
 import ch.lalumash.IBNG.dtos.feed.FeedDto
-import ch.lalumash.IBNG.entities.FeedEntity
-import ch.lalumash.IBNG.entities.PostEntity
+import ch.lalumash.IBNG.dtos.feed.TextPostDto
 import ch.lalumash.IBNG.entities.TextPostEntity
 import ch.lalumash.IBNG.services.FeedService
 import ch.lalumash.IBNG.services.GlobalMapper
@@ -23,7 +22,7 @@ class FeedController @Autowired constructor(
         private val userService: UserService
 ) {
     @GetMapping("{userName}")
-    fun getFeedById(@PathVariable userName: String?): FeedDto {
+    fun getFeedById(@PathVariable userName: String?): FeedDto? {
         if (userName == null) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "Feedname darf nicht null sein.")
         }
@@ -61,8 +60,8 @@ class FeedController @Autowired constructor(
     @PostMapping("user/mockdata")
     fun test(@RequestBody feed: CreateFeedDto) {
         val list = listOf(
-                TextPostEntity("test", LocalDateTime.now(), "ein beispieltext", null),
-                TextPostEntity("test", LocalDateTime.now(), "ein zweiter post", null)
+                TextPostDto("test", LocalDateTime.now(), "ein beispieltext"),
+                TextPostDto("test", LocalDateTime.now(), "ein zweiter post")
         )
 
         feedService.convertFeed(FeedDto(list, feed.id));

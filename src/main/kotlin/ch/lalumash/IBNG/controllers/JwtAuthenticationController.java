@@ -1,7 +1,9 @@
 package ch.lalumash.IBNG.controllers;
 
+import ch.lalumash.IBNG.dtos.AuthResponse;
 import ch.lalumash.IBNG.entities.JwtRequest;
 import ch.lalumash.IBNG.entities.JwtResponse;
+import ch.lalumash.IBNG.entities.UserEntity;
 import ch.lalumash.IBNG.helper.JwtTokenUtil;
 import ch.lalumash.IBNG.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,17 @@ public class JwtAuthenticationController {
     @Autowired
     private UserService userService;
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    public AuthResponse createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
         final UserDetails userDetails = userService
                 .loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+
+        UserEntity userById = userService.getUserById(authenticationRequest.getUsername());
+        assert userById != null;
+        return new AuthResponse(token, userById.getUsername(), userById.getNickname());
+
     }
     private void authenticate(String username, String password) throws Exception {
         try {

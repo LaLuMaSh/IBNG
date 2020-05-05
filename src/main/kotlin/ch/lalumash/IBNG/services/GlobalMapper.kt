@@ -2,7 +2,9 @@ package ch.lalumash.IBNG.services
 
 import ch.lalumash.IBNG.dtos.UserDto
 import ch.lalumash.IBNG.dtos.feed.FeedDto
+import ch.lalumash.IBNG.dtos.feed.TextPostDto
 import ch.lalumash.IBNG.entities.FeedEntity
+import ch.lalumash.IBNG.entities.TextPostEntity
 import ch.lalumash.IBNG.entities.UserEntity
 import org.springframework.stereotype.Service
 
@@ -14,11 +16,17 @@ class GlobalMapper {
                 nickname = user.nickname
         )
     }
-    fun feedEntityToDto(feed: FeedEntity?): FeedDto {
+    fun feedEntityToDto(feed: FeedEntity?): FeedDto? {
+        val list = ArrayList<TextPostDto>();
         if (feed != null) {
-            return FeedDto(id = feed.id, postEntities = feed.postEntities)
+            for (postEntity in feed.postEntities) {
+                list.add(TextPostDto(postEntity.author!!, postEntity.created!!, postEntity.text!!))
+            }
+        }
+        return if (feed != null) {
+            FeedDto(id = feed.id, postEntities = list)
         }else {
-            return FeedDto(id = "", postEntities = ArrayList())
+            null;
         }
     }
 }
